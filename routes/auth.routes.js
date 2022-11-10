@@ -52,6 +52,18 @@ router.post("/signup", async (req, res, next) =>{
         const hashPassword = await bcrypt.hash(password, salt)
 
     // Crear el usuario
+        const newUser ={
+            username: username,
+            email: email,
+            password: hashPassword
+        }
+
+
+        await User.create(newUser)
+
+        // Enviar mensaje al FE
+
+        res.status(201).json("Usuario registrado con exito")
         
     } catch (error) {
         next(error)
@@ -59,20 +71,13 @@ router.post("/signup", async (req, res, next) =>{
     }
 
 
-    // Codificar contraseña
-
-    // Crear el usuario
-
-
-    // Enviar mensaje aal FE
-
-
-
-
-    res.status(200).json("funciona")
-
 })
 //POST "/api/auth/login"
+router.post("/login", async (req, res, next) =>{
+
+    
+
+})
 //GET "/api/auth/verification"
 
 
