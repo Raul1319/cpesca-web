@@ -1,6 +1,7 @@
 const User = require("../models/User.model");
 const bcrypt = require('bcryptjs');
 const router = require("express").Router();
+const jwt = require("jsonwebtoken")
 
 
 // Rutas de autenticación
@@ -64,6 +65,7 @@ router.post("/signup", async (req, res, next) =>{
         // Enviar mensaje al FE
 
         res.status(201).json("Usuario registrado con exito")
+        return;
         
     } catch (error) {
         next(error)
@@ -75,6 +77,64 @@ router.post("/signup", async (req, res, next) =>{
 //POST "/api/auth/login"
 router.post("/login", async (req, res, next) =>{
 
+    const { username, email, password } = req.body
+
+    // Validaciones de backend
+
+    //Todos los campos requeridos llenos
+    if(!email || !password || !username ) {
+        res.status(400).json({errorMessage: "Debes rellenar todos los campos"})
+        return;
+    }
+
+    try {
+
+        // Usuario existe
+        const foundUser = await User.findOne({email:email})
+        console.log(foundUser)
+        if(foundUser === null) {
+            res.status(400).json({errorMessage: "Credenciales no validas"})
+            return;
+
+        }
+        
+
+    //Contraseña correcta
+
+    const passwordValid = await bcrypt.compare(password, foundUser.password)
+    if(passwordValid === false) {
+        res.status(400).json({errorMessage: "Credenciales no validas"})
+            return;
+
+    }
+
+    // Sesión
+    const payload ={
+      _id: foundUser._id,
+      email: foundUser.email,
+      username: foundUser.username,
+      role: foundUser.role,
+      
+    }
+
+    const authToken = jwt.sign(
+        payload,
+        process.env.TOKEN_SECRET,
+        { algorithm: "HS256", expiresIn: "4h"}
+    )
+        
+
+    res.status(200).json({authToken: authToken})
+    
+    } catch (error) {
+        next(error)
+        
+    }
+
+    
+    
+
+    
     
 
 })
