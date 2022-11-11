@@ -1,7 +1,8 @@
 const User = require("../models/User.model");
 const bcrypt = require('bcryptjs');
 const router = require("express").Router();
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const isAuthenticated = require("../middlewares/auth-middlewares");
 
 
 // Rutas de autenticación
@@ -131,14 +132,16 @@ router.post("/login", async (req, res, next) =>{
         
     }
 
-    
-    
-
-    
-    
-
 })
+
+router.get("/verify", isAuthenticated, (req, res, next) =>{
 //GET "/api/auth/verification"
+
+
+res.status(200).json({ user: req.payload})
+return;
+})
+
 
 
 module.exports = router;
