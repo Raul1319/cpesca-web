@@ -133,9 +133,10 @@ router.post("/login", async (req, res, next) =>{
     }
 
 })
+//GET "/api/auth/verification"
 
 router.get("/verify", isAuthenticated, (req, res, next) =>{
-//GET "/api/auth/verification"
+
 
 
 res.status(200).json({ user: req.payload})
