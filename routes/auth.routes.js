@@ -94,7 +94,7 @@ router.post("/login", async (req, res, next) =>{
         const foundUser = await User.findOne({email:email})
         console.log(foundUser)
         if(foundUser === null) {
-            res.status(400).json({errorMessage: "Credenciales no validas"})
+            res.status(406).json({errorMessage: "Credenciales no validas"})
             return;
 
         }
@@ -104,7 +104,7 @@ router.post("/login", async (req, res, next) =>{
 
     const passwordValid = await bcrypt.compare(password, foundUser.password)
     if(passwordValid === false) {
-        res.status(400).json({errorMessage: "Credenciales no validas"})
+        res.status(401).json({errorMessage: "Credenciales no validas"})
             return;
 
     }
