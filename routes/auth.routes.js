@@ -12,7 +12,7 @@ const isAuthenticated = require("../middlewares/auth-middlewares");
 router.post("/signup", async (req, res, next) =>{
     const { username, email, password } = req.body
 
-   // Validaciones de backend
+   // Validaciones de backend los campos no pueden estar vacios
      if(!email || !password || !username ) {
         res.status(400).json({errorMessage: "Debes rellenar todos los campos"})
         return;
@@ -23,7 +23,7 @@ router.post("/signup", async (req, res, next) =>{
 
     const passwordValidation = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm
     if(passwordValidation.test(password)=== false){
-        res.status(412).json({errorMessage: "La contarseña debe contener minimo 8 caracteres, una mayuscula y minusculas"})
+        res.status(400).json({errorMessage: "La contarseña debe contener minimo 8 caracteres, una mayuscula y minusculas"})
         return;
     }
 
@@ -39,13 +39,14 @@ router.post("/signup", async (req, res, next) =>{
 
         const foundUser = await User.findOne({username:username})
         if(foundUser !== null) {
-            res.status(203).json({errorMessage: "Este nombre ya existe"})
+            res.status(400).json({errorMessage: "Este nombre ya existe"})
             return;
         }
+        //verifica si el email ya existe
 
         const foundEmail = await User.findOne({email:email})
         if(foundEmail !== null) {
-            res.status(203).json({errorMessage: "Este email ya esta en uso"})
+            res.status(400).json({errorMessage: "Credenciales incorrectas"})
             return;
         }
 
@@ -65,7 +66,7 @@ router.post("/signup", async (req, res, next) =>{
 
         // Enviar mensaje al FE
 
-        res.status(201).json("Usuario registrado con exito")
+        res.status(202).json("Usuario registrado con exito")
         return;
         
     } catch (error) {
@@ -83,7 +84,7 @@ router.post("/login", async (req, res, next) =>{
     // Validaciones de backend
 
     //Todos los campos requeridos llenos
-    if(!email || !password || !username ) {
+    if(!email || !password ) {
         res.status(400).json({errorMessage: "Debes rellenar todos los campos"})
         return;
     }
@@ -94,7 +95,7 @@ router.post("/login", async (req, res, next) =>{
         const foundUser = await User.findOne({email:email})
         console.log(foundUser)
         if(foundUser === null) {
-            res.status(406).json({errorMessage: "Credenciales no validas"})
+            res.status(400).json({errorMessage: "Credenciales no validas"})
             return;
 
         }
@@ -104,7 +105,7 @@ router.post("/login", async (req, res, next) =>{
 
     const passwordValid = await bcrypt.compare(password, foundUser.password)
     if(passwordValid === false) {
-        res.status(401).json({errorMessage: "Credenciales no validas"})
+        res.status(400).json({errorMessage: "Credenciales no validas"})
             return;
 
     }
