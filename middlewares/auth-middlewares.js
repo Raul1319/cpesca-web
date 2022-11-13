@@ -4,7 +4,9 @@ const isAuthenticated = jwt({
    secret: process.env.TOKEN_SECRET,
    algorithms: ["HS256"],
    requestProperty: "payload",
-   getToken: (req) =>{  //cuando no hay token
+   getToken: (req) =>{
+    console.log (req.headers.authorization)
+  //cuando no hay token
     if(req.headers === undefined || req.headers.authorization === undefined){
         return null;
     }

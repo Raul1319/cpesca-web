@@ -79,7 +79,7 @@ router.post("/signup", async (req, res, next) =>{
 //POST "/api/auth/login"
 router.post("/login", async (req, res, next) =>{
 
-    const { username, email, password } = req.body
+    const {  email, password } = req.body
 
     // Validaciones de backend
 
@@ -93,7 +93,7 @@ router.post("/login", async (req, res, next) =>{
 
         // Usuario existe
         const foundUser = await User.findOne({email:email})
-        console.log(foundUser)
+        
         if(foundUser === null) {
             res.status(400).json({errorMessage: "Credenciales no validas"})
             return;
