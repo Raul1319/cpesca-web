@@ -1,4 +1,5 @@
 const { Schema, model, mongoose } = require("mongoose");
+const router = express.Router();
 
 const productsSchema = new Schema(
     {
@@ -6,6 +7,7 @@ const productsSchema = new Schema(
         name: String,
         description: String,
         productType: String,
+        comments:[String]
 
       }
 

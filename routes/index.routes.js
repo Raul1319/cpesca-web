@@ -1,3 +1,4 @@
+const express = require('express');
 const router = require("express").Router();
 
 router.get("/", (req, res, next) => {
@@ -9,5 +10,9 @@ router.get("/", (req, res, next) => {
 
 const authRoutes = require("./auth.routes");
 router.use("/auth", authRoutes);
+
+const productsRoutes = require("./products.routes");
+router.use("/products", productsRoutes); //productos  para pesca
+
 
 module.exports = router;
