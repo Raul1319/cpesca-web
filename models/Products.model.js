@@ -1,13 +1,17 @@
 const { Schema, model, mongoose } = require("mongoose");
-const router = express.Router();
 
 const productsSchema = new Schema(
     {
       products:{
         name: String,
         description: String,
-        productType: String,
-        comments:[String]
+        category: {
+          type: String,
+          enum: ["cañas", "anzuelos", "carretes", "vestuario"],
+        },
+        comments:[String],
+        price:Number,
+        image:String
 
       }
 
