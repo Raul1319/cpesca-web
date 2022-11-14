@@ -13,5 +13,8 @@ router.use("/auth", authRoutes);
 const productsRoutes = require("./products.routes");
 router.use("/products", productsRoutes); //productos  para pesca
 
+const profileRoutes = require("./profile.routes");
+router.use("/profile", profileRoutes);
+
 
 module.exports = router;
