@@ -19,6 +19,9 @@ router.use("/profile", profileRoutes);
 const commentsRoutes = require("./comments.routes");
 router.use("/comments", commentsRoutes);
 
+const cartRoutes = require("./cart.routes");
+router.use("/cart", cartRoutes)
+
 
 
 
