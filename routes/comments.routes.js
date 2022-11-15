@@ -21,7 +21,7 @@ router.get("/:productIdComments", isAuthenticated, async (req, res, next) => {
         next()
         
     }
-    
+    c
 })
 
 router.post("/:productId/comments",  async (req, res, next) =>{
