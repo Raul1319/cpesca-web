@@ -1,9 +1,9 @@
-const { Schema, model, mongoose, trusted } = require("mongoose");
+const { Schema, model, mongoose, } = require("mongoose");
 
 const cartSchema = new Schema (
 
     {
-      name:{
+      cartname:{
        type: String,
        require: true,
        unique: true
@@ -21,9 +21,22 @@ const cartSchema = new Schema (
       
       price:{
        type: Number,
-       require: true
+       require: true,
 
-      }
+      },
+
+      username: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"User"
+      }],
+
+      products: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Products"
+      }],
+      
+      
+
 
 
 

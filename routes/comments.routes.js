@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../models/User.model");
 const Products = require("../models/Products.model");
 const isAuthenticated = require("../middlewares/auth-middlewares");
+const Comments = require("../models/Comments.model")
 
 
 
@@ -23,7 +24,7 @@ router.get("/:productIdComments", isAuthenticated, async (req, res, next) => {
     
 })
 
-router.patch("/:productId/comments",  async (req, res, next) =>{
+router.post("/:productId/comments",  async (req, res, next) =>{
 
     const { productId } = req.params
 
@@ -31,8 +32,7 @@ router.patch("/:productId/comments",  async (req, res, next) =>{
 
     try {
 
-        const response = await Products.findById(productId)
-        response.comments.push(comments);
+        const response = await Products.findByIdAndUpdate(productId, {$push:{comments:productId}} )
         Products.findByIdAndUpdate(productId, response)
         res.status(201).json("Tu comentario ha sido creado y actulizado")
         

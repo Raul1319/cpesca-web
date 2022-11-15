@@ -5,11 +5,18 @@ const { Schema, model, mongoose } = require("mongoose");
 const commentsSchema = new Schema(
 
     {
-        comments: {
+
+        comments: [String],
+        products: [{
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Products"
-        }
+            ref:"Products"
+          }],
+          username: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:"User"
+          }],
     }
+
 
 
 

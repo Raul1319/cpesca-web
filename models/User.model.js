@@ -7,6 +7,8 @@ const userSchema = new Schema(
   {
 
     username: {
+      name: String,
+      lastname: String,
       type: String,
       trim: true,
       required: false,
@@ -27,10 +29,35 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Password is required.']
     },
+
+    inCart:{
+      type: Boolean,
+      default: false,
+    },
+    
     role: {
       type: String,
       enum: ["admin", "user"],
-      default: "user"
+      default: "user",
+      comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"User"
+      }],
+
+      products: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"User"
+      }],
+
+      comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Comments"
+      }],
+
+      cartname: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Cart"
+      }],
 
     }
 
