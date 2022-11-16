@@ -10,7 +10,7 @@ const productsSchema = new Schema(
           enum: ["cañas", "anzuelos", "carretes", "vestuario"],
         },
         comments: [{
-          type: mongoose.Schema.Types.ObjectId,
+          type: Schema.Types.ObjectId,
           ref:"Products"
         }],
         price:Number,
@@ -20,12 +20,12 @@ const productsSchema = new Schema(
           default: false,
         },
         username: [{
-          type: mongoose.Schema.Types.ObjectId,
+          type: Schema.Types.ObjectId,
           ref:"User"
         }],
 
         cartname: [{
-          type: mongoose.Schema.Types.ObjectId,
+          type: Schema.Types.ObjectId,
           ref:"Cart"
         }],
 

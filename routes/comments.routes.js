@@ -2,7 +2,8 @@ const router = require("express").Router();
 const User = require("../models/User.model");
 const Products = require("../models/Products.model");
 const isAuthenticated = require("../middlewares/auth-middlewares");
-const Comments = require("../models/Comments.model")
+const Comments = require("../models/Comments.model");
+const { request } = require("express");
 
 
 
@@ -21,20 +22,49 @@ router.get("/:productIdComments", isAuthenticated, async (req, res, next) => {
         next()
         
     }
-    c
+
+    
+    
 })
 
-router.post("/:productId/comments",  async (req, res, next) =>{
+router.post("/createComments/:id", isAuthenticated, async (req, res, next) =>{
+             
+    const { products } = req.params.id
+    const { comments } = req.body.comments
+    const { username } = req.payload._id
+   
+  const newComments ={
+      products : products,
+      usename: username,
+      comments: comments
 
-    const { productId } = req.params
 
-    const { comments } = req.body
+  }
+
+  try {
+
+      await Comments.create(newComments)
+      res.status(200).json("Comentario añadido")
+      
+  } catch (error) {
+      next(error)
+      
+  }
+
+  
+})
+
+router.patch("/:productId/comments",  async (req, res, next) =>{
+
+    const { productId } = req.params;
+
+    const { comments } = req.body.comments
 
     try {
 
         const response = await Products.findByIdAndUpdate(productId, {$push:{comments:productId}} )
         Products.findByIdAndUpdate(productId, response)
-        res.status(201).json("Tu comentario ha sido creado y actulizado")
+        res.status(201).json("Tu comentario ha sido creado y actualizado")
         
     } catch (error) {
         next(error)

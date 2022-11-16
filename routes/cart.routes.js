@@ -35,6 +35,8 @@ router.post("/:addProductsCart", async (req, res, netx) =>{
 
     try {
 
+        await User.create(cartname)
+
         // Verifica si tenemos productos
 
         const thereProducts = await Products.findOne({name})
@@ -77,7 +79,74 @@ router.post("/:addProductsCart", async (req, res, netx) =>{
 
 })
 
-//busca el producto en el car
+//busca el producto en el carrito y actualizarlo
 
+router.patch("/product-cart/:productId", async (req, res, next) =>{
+
+    const { productId } = req.params;
+    const { query } = req.query;
+    const body = req.body;
+
+    try {
+
+        const productsSearch = await Cart.findById(productId);
+
+        if(!query){
+            res.status(404).json("Debes enviar algo");
+
+
+            //si esta el producto en el carro y quiero agregar
+        }else if (productsSearch && query === "add"){
+            body.amount = body.amount +1;
+
+            await Cart.findByIdAndUpdate(productId, body,{
+                new: true
+            }).then((product) =>{
+                res.status(200).json(`El producto: ${product.name} fue actualiazado`)
+            });
+
+             // si el producto esta en el carrito y lo quiero sacar
+        } else if(productsSearch && query === "del"){
+            body.amount = body.amount -1;
+
+            await Cart.findByIdAndUpdate(productId, body,{
+                new:true,
+            }).then((product) =>{
+                res.status(200).json(`El producto ${product.name} fue actualizado`)
+            }) 
+        } 
+        
+    } catch (error) {
+        next(error)
+        
+    }
+})
+//elimina producto del carrito
+router.delete("/cartDelete/:productId", async (req, res, next) =>{
+    const { productId } = req.params;
+    
+    try {
+        
+        const {name, image, price, _id} = await Products.findOne({
+            name:newProductInCart.name,
+        });
+        
+        // elimin producto por su id del cart
+        await Products.findByIdAndDelete(productId);
+        
+        await Products.findByIdAndUpdate(
+            _id,
+            {inCart: false, name, img, price},
+            {new: true}
+            
+        )
+        res.status(400).json( "El producto ha sido eliminado del carrito")
+        
+    } catch (error) {
+        next(error)
+        
+    }
+    // busca producto en db por el nom que esta en el car
+})
 
 module.exports = router;

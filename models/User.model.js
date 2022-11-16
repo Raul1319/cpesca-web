@@ -40,12 +40,12 @@ const userSchema = new Schema(
       enum: ["admin", "user"],
       default: "user",
       comments: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref:"User"
       }],
 
       products: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref:"User"
       }],
 
@@ -55,7 +55,7 @@ const userSchema = new Schema(
       }],
 
       cartname: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref:"Cart"
       }],
 

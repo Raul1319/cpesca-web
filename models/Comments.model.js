@@ -6,15 +6,18 @@ const commentsSchema = new Schema(
 
     {
 
-        comments: [String],
-        products: [{
-            type: mongoose.Schema.Types.ObjectId,
+        comments:{
+          type: String,
+
+        },
+        products: {
+            type: Schema.Types.ObjectId,
             ref:"Products"
-          }],
-          username: [{
-            type: mongoose.Schema.Types.ObjectId,
+          },
+          username: {
+            type: Schema.Types.ObjectId,
             ref:"User"
-          }],
+          },
     }
 
 

@@ -1,14 +1,16 @@
 const Products = require("../models/Products.model");
 const router = require("express").Router();
+const Comments = require("../models/Comments.model");
+const  isAuthenticated = require("../middlewares/auth-middlewares");
 
-router.get("/products",  (req, res, next) => {
+router.get("/products", isAuthenticated,  (req, res, next) => {
      ({ category:["cañas", "anzuelos", "carretes", "vestuario"]})
      res.status(200).json("Lista de productos")
     });
 
 
 
-router.post("/products", async (req,res,netx) =>{
+router.post("/create-products", async (req,res,netx) =>{
 
     const { name, description, category,  comments, price, image } = req.body
 
@@ -19,7 +21,10 @@ router.post("/products", async (req,res,netx) =>{
             description:description,
             category: category,
             price:price,
-            image:image
+            image:image,
+            comments: comments
+            
+            
         }
 
         await Products.create(newProduct)
