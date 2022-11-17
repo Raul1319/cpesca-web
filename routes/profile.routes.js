@@ -17,8 +17,8 @@ router.get("/profile", isAuthenticated, async (req, res, next) =>{
     }
 })
 
-router.patch("/:editProfileId",  async(req, res, next)=>{
-    const { editProfileId } = req.params // recibe el id del cliente a editar
+router.patch("/:profileId/edit",  async(req, res, next)=>{
+    const { profileId } = req.params // recibe el id del cliente a editar
     const { username, email, password } = req.body  //recibe lo que el cliente desea editar
 
     
@@ -30,7 +30,7 @@ router.patch("/:editProfileId",  async(req, res, next)=>{
 
     try {
 
-        await  User.findByIdAndUpdate(editProfileId, userToEdit)
+        await  User.findByIdAndUpdate(profileId, userToEdit)
         res.status(201).json("Tu perfil ha sido actualizado")
         
     } catch (error) {
@@ -40,13 +40,13 @@ router.patch("/:editProfileId",  async(req, res, next)=>{
 
 })
 
-router.delete("/:userIdDelete", async (req, res, next) =>{
+router.delete("/:userId/delete", async (req, res, next) =>{
 
-    const { userIdDelete } = req.params
+    const { userId } = req.params
 
     try {
 
-        await User.findByIdAndDelete(userIdDelete)
+        await User.findByIdAndDelete(userId)
         res.status(202).json("Tu perfil ha sido Eliminado")
 
         

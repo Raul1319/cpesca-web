@@ -4,10 +4,11 @@ const Products = require("../models/Products.model");
 const isAuthenticated = require("../middlewares/auth-middlewares");
 const Comments = require("../models/Comments.model");
 const { request } = require("express");
+const { response } = require("../app");
 
 
 
-router.get("/:productIdComments", isAuthenticated, async (req, res, next) => {
+router.get("/productIdComments", isAuthenticated, async (req, res, next) => {
     const { productIdComments } = req.params;
 
     try {
@@ -71,6 +72,21 @@ router.patch("/:productId/comments",  async (req, res, next) =>{
     }
 
 
+})
+
+router.delete("/:deleteCommentId", isAuthenticated, async (req, res, next) =>{
+          
+           const { deleteCommentId } = req.params
+
+
+    try {
+
+        const response = await Comments.findByIdAndDelete( deleteCommentId, response)
+        
+    } catch (error) {
+        next(error)
+        
+    }
 })
 
 
