@@ -19,13 +19,13 @@ router.get("/profile", isAuthenticated, async (req, res, next) =>{
 
 router.patch("/:profileId/edit",  async(req, res, next)=>{
     const { profileId } = req.params // recibe el id del cliente a editar
-    const { username, email, password } = req.body  //recibe lo que el cliente desea editar
+    const { username, email } = req.body  //recibe lo que el cliente desea editar
 
     
     const userToEdit = {
         username,
         email,
-        password
+        
       }
 
     try {

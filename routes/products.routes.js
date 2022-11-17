@@ -10,7 +10,7 @@ router.get("/products", isAuthenticated,  (req, res, next) => {
 
 
 
-router.post("/create-products", async (req,res,netx) =>{
+router.post("/:create/products", async (req,res,netx) =>{
 
     const { name, description, category,  comments, price, image } = req.body
 
