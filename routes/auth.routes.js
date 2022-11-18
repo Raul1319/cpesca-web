@@ -136,6 +136,8 @@ router.post("/login", async (req, res, next) =>{
 })
 //GET "/api/auth/verification"
 
+//cometario para hacer un push
+
 router.get("/verify", isAuthenticated, (req, res, next) =>{
 
 
