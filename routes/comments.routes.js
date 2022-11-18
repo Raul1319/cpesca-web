@@ -74,7 +74,7 @@ router.patch("/:productId/comments",  async (req, res, next) =>{
 
 })
 
-router.delete("/:deleteCommentId", isAuthenticated, async (req, res, next) =>{
+router.delete("/:deleteCommentId/", isAuthenticated, async (req, res, next) =>{
           
            const { deleteCommentId } = req.params
 

@@ -3,10 +3,7 @@ const router = require("express").Router();
 const Comments = require("../models/Comments.model");
 const  isAuthenticated = require("../middlewares/auth-middlewares");
 
-router.get("/products", isAuthenticated,  (req, res, next) => {
-     ({ category:["cañas", "anzuelos", "carretes", "vestuario"]})
-     res.status(200).json("Lista de productos")
-    });
+
 
 
 
@@ -38,13 +35,13 @@ router.post("/:create/products", async (req,res,netx) =>{
     }
 })
    //lista de productos por categorias
-router.get("/:list", async (req, res, next) =>{
-    const { category } = req.params
+router.get("/:productsId/list", async (req, res, next) =>{
+    const { productsId } = req.params
 
    
      
     try {
-     await Products.findOne(category)
+     await Products.findById(productsId)
      res.status(200).json("aqui estan tus productos")
         
     } catch (error) {
